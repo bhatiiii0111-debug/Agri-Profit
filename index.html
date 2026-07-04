@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>AgriProfit - Unbiased Advisory</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" />
+  <link rel="stylesheet" href="styles.css?v=4">
+</head>
+<body>
+
+<!-- ============================================
+     SCREEN 1: Landing & Login
+     ============================================ -->
+<section class="screen active" id="screen-login">
+  <div class="landing-header">
+    <div class="lang-toggle">
+      <button class="active" data-lang="en">EN</button>
+      <button data-lang="hi">हिं</button>
+      <button data-lang="mr">मरा</button>
+    </div>
+  </div>
+
+  <div class="landing-content">
+    <div class="logo-container">
+      <div class="logo-icon" style="color:var(--green-700);">🌱</div>
+      <div class="logo-text">AgriProfit</div>
+    </div>
+
+    <div class="login-card">
+      <h2 data-i18n="login_tagline">Empowering Farmers with Unbiased, Scientific Advice</h2>
+      <p data-i18n="login_subtitle" style="font-weight:500; color:var(--gray-700);">100% free. No commissions. No branded products. Just pure farming knowledge to 2x your profit.</p>
+      
+      <div class="login-btn-group mt-4" id="loginBtnGroup">
+        <button class="btn btn-cta btn-full" onclick="showRegistration()">
+          <span class="material-symbols-rounded">person_add</span>
+          <span data-i18n="login_create">Create Your Free Profile</span>
+        </button>
+        <button class="btn btn-outline btn-full mt-2" onclick="startLogin()">
+          <span class="material-symbols-rounded">login</span>
+          <span data-i18n="login_btn">Login</span>
+        </button>
+      </div>
+
+      <div class="login-loading" id="loginLoading">
+        <div class="loader-spinner"></div>
+        <div class="loading-steps">
+          <div class="loading-step active" id="step-auth">
+            <span class="material-symbols-rounded">fingerprint</span>
+            <span data-i18n="loading_auth">Authenticating...</span>
+          </div>
+          <div class="loading-step" id="step-land">
+            <span class="material-symbols-rounded">map</span>
+            <span data-i18n="loading_land">Fetching local climate data...</span>
+          </div>
+          <div class="loading-step" id="step-soil">
+            <span class="material-symbols-rounded">science</span>
+            <span data-i18n="loading_soil">Preparing personalized plan...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     SCREEN: Seamless Onboarding
+     ============================================ -->
+<section class="screen" id="screen-register">
+  <div class="top-bar">
+    <button class="back-btn" onclick="navigateTo('screen-login')" id="regBackBtn" style="visibility:hidden;">
+      <span class="material-symbols-rounded">arrow_back</span>
+    </button>
+    <h2 data-i18n="reg_title">Welcome to AgriProfit</h2>
+    <div style="width:40px;"></div>
+  </div>
+
+  <div class="reg-progress">
+    <div class="reg-progress-dot active"></div>
+    <div class="reg-progress-dot"></div>
+    <div class="reg-progress-dot"></div>
+  </div>
+
+  <!-- Step 1: Personal & Phone -->
+  <div class="reg-step-content active" id="regStep1">
+    <h3 data-i18n="reg_step1">Personal Details</h3>
+    <p class="text-sm text-muted mb-4">Let's set up your personalized advisory profile.</p>
+
+    <div class="input-group" id="group-name">
+      <label data-i18n="reg_name">Full Name *</label>
+      <input type="text" id="regName" class="input-field" placeholder="e.g. Rajesh Kumar" oninput="clearError('name')">
+      <div class="error-message" id="err-name">Please enter your full name.</div>
+    </div>
+    
+    <div class="input-group" id="group-phone">
+      <label data-i18n="reg_phone">Phone Number *</label>
+      <input type="tel" id="regPhone" class="input-field" placeholder="10-digit mobile number" maxlength="10" oninput="clearError('phone')">
+      <div class="error-message" id="err-phone">Please enter a valid 10-digit number.</div>
+    </div>
+
+    <!-- OTP Section shown after validation -->
+    <div class="otp-section" id="otpSection">
+      <div class="input-group mt-4" id="group-otp">
+        <label data-i18n="reg_enter_otp">Enter 4-digit OTP sent to your phone</label>
+        <div style="display:flex; gap:8px;">
+          <input type="number" id="otp1" class="input-field text-center" placeholder="-" oninput="clearError('otp')">
+          <input type="number" id="otp2" class="input-field text-center" placeholder="-" oninput="clearError('otp')">
+          <input type="number" id="otp3" class="input-field text-center" placeholder="-" oninput="clearError('otp')">
+          <input type="number" id="otp4" class="input-field text-center" placeholder="-" oninput="clearError('otp')">
+        </div>
+        <div class="error-message" id="err-otp">OTP must be 4 digits.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2: Farm Location -->
+  <div class="reg-step-content" id="regStep2">
+    <h3 data-i18n="reg_step2">Farm Location</h3>
+    <p class="text-sm text-muted mb-4">This helps us provide hyper-local weather and advisory.</p>
+
+    <div class="input-group" id="group-state">
+      <label data-i18n="reg_state">State *</label>
+      <select id="regState" class="input-field" onchange="clearError('state')">
+        <option value="">Select State</option>
+        <option value="Haryana">Haryana</option>
+        <option value="Punjab">Punjab</option>
+        <option value="Maharashtra">Maharashtra</option>
+        <option value="Madhya Pradesh">Madhya Pradesh</option>
+      </select>
+      <div class="error-message" id="err-state">Please select your state.</div>
+    </div>
+    <div class="input-group" id="group-district">
+      <label data-i18n="reg_district">District / Village *</label>
+      <input type="text" id="regDistrict" class="input-field" placeholder="e.g. Karnal" oninput="clearError('district')">
+      <div class="error-message" id="err-district">Please enter your district or village.</div>
+    </div>
+  </div>
+
+  <!-- Step 3: Farm Specifics -->
+  <div class="reg-step-content" id="regStep3">
+    <h3 data-i18n="reg_step3">Farm Specifics</h3>
+    <p class="text-sm text-muted mb-4">We will tailor our scientific recommendations based on these details.</p>
+
+    <div class="input-group" id="group-acres">
+      <label data-i18n="reg_acres">Total Farm Size (Acres) *</label>
+      <input type="number" id="regAcres" class="input-field" placeholder="e.g. 4.5" step="0.1" oninput="clearError('acres')">
+      <div class="error-message" id="err-acres">Please enter a valid farm size (e.g. 4.5).</div>
+    </div>
+    <div class="input-group" id="group-soil">
+      <label data-i18n="reg_soil">Soil Type *</label>
+      <select id="regSoil" class="input-field" onchange="clearError('soil')">
+        <option value="">Select Soil Type</option>
+        <option value="Clay Loam">Clay Loam</option>
+        <option value="Sandy Loam">Sandy Loam</option>
+        <option value="Black Soil">Black Soil</option>
+      </select>
+      <div class="error-message" id="err-soil">Please select a soil type.</div>
+    </div>
+    <div class="input-group" id="group-crop">
+      <label data-i18n="reg_crop">Primary Crop Currently Grown *</label>
+      <select id="regCrop" class="input-field" onchange="clearError('crop')">
+        <option value="">Select Crop</option>
+        <option value="Basmati Rice">Basmati Rice</option>
+        <option value="Wheat">Wheat</option>
+        <option value="Cotton">Cotton</option>
+      </select>
+      <div class="error-message" id="err-crop">Please select your primary crop.</div>
+    </div>
+  </div>
+
+  <div class="reg-footer">
+    <button class="btn btn-outline" style="flex:1;" onclick="regBack()" id="regBackBtn2" data-i18n="reg_back">Back</button>
+    <button class="btn btn-primary" style="flex:2;" onclick="regNext()" id="regNextBtn">
+      <span id="regNextText" data-i18n="reg_next">Next</span>
+    </button>
+  </div>
+</section>
+
+<!-- ============================================
+     SCREEN 2: Personalized Dashboard
+     ============================================ -->
+<section class="screen" id="screen-dashboard">
+  <div class="dashboard-header">
+    <div class="user-info">
+      <div>
+        <h1 id="dashGreeting" data-i18n="dash_greeting">Welcome back, Rajesh ji 👋</h1>
+        <p><span class="material-symbols-rounded" style="font-size:16px;">location_on</span> <span id="dashLocation" data-i18n="dash_location">Karnal, Haryana</span></p>
+      </div>
+    </div>
+    
+    <div class="weather-cards">
+      <div class="weather-widget">
+        <div class="weather-icon">⛅</div>
+        <div class="weather-info">
+          <strong>32°C</strong>
+          <span data-i18n="dash_partly_cloudy">Partly Cloudy</span>
+        </div>
+      </div>
+      <div class="weather-widget">
+        <div class="weather-icon">💧</div>
+        <div class="weather-info">
+          <strong>68%</strong>
+          <span data-i18n="dash_humidity">Humidity</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard-content">
+    <div class="crop-hero-card" onclick="navigateTo('screen-crop-planning')">
+      <div class="crop-header">
+        <div>
+          <h3 id="dashCropName">Basmati Rice Plan</h3>
+          <p id="dashFarmDetails">Plot A — 4.2 acres · Clay Loam</p>
+        </div>
+        <div class="progress-ring-container">
+          <span style="font-weight:700; font-size:0.85rem; color:white; z-index:2;">35%</span>
+        </div>
+      </div>
+      <div class="crop-status" data-i18n="crop_day" data-i18n-html>
+        Day 42 of 120 — <strong>Tillering Stage</strong>
+      </div>
+    </div>
+
+    <!-- Dynamic Suggestion Card -->
+    <div class="suggestion-card" id="dynamicSuggestion" onclick="navigateTo('screen-pest')">
+      <div class="suggestion-header">
+        <span class="material-symbols-rounded">psychology</span>
+        <h4 data-i18n="dash_suggestion_title">Scientific Advisory for Karnal</h4>
+      </div>
+      <p data-i18n="dash_suggestion_desc">High humidity detected. Watch out for Brown Plant Hopper in Basmati Rice. Tap here for early organic prevention methods.</p>
+    </div>
+
+    <div class="section-title mt-4">
+      <h3 data-i18n="section_quick">Quick Actions</h3>
+    </div>
+    
+    <div class="quick-links">
+      <div class="quick-link-item" onclick="navigateTo('screen-expert')">
+        <div class="ql-icon consult"><span class="material-symbols-rounded">support_agent</span></div>
+        <span data-i18n="quick_consult">Consult Expert</span>
+      </div>
+      <div class="quick-link-item" onclick="navigateTo('screen-learning')">
+        <div class="ql-icon academy"><span class="material-symbols-rounded">school</span></div>
+        <span data-i18n="quick_academy">Video Academy</span>
+      </div>
+      <div class="quick-link-item" onclick="navigateTo('screen-market')">
+        <div class="ql-icon calc"><span class="material-symbols-rounded">calculate</span></div>
+        <span data-i18n="quick_calc">Profit Calc</span>
+      </div>
+      <div class="quick-link-item" onclick="navigateTo('screen-community')">
+        <div class="ql-icon community"><span class="material-symbols-rounded">forum</span></div>
+        <span data-i18n="quick_community">Community</span>
+      </div>
+    </div>
+
+    <div class="section-title mt-4">
+      <h3 data-i18n="section_next_task">Next Advisory Task</h3>
+      <a href="#" onclick="navigateTo('screen-crop-planning')" data-i18n="full_plan">Full Plan →</a>
+    </div>
+    <div class="card task-card" onclick="navigateTo('screen-crop-planning')">
+      <div class="task-icon" style="background:var(--blue-100); color:var(--blue-700);"><span class="material-symbols-rounded">science</span></div>
+      <div class="task-details">
+        <h4 data-i18n="task_fertilizer">Nutrient Management</h4>
+        <p data-i18n="task_due">Apply Nitrogen · Due in 3 days</p>
+      </div>
+      <span class="badge badge-earth" data-i18n="pending">Pending</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     SCREEN 3: Unbiased Advisory Engine
+     ============================================ -->
+<section class="screen" id="screen-crop-planning">
+  <div class="cp-hero">
+    <div class="cp-header">
+      <button class="back-btn" onclick="navigateTo('screen-dashboard')">
+        <span class="material-symbols-rounded">arrow_back</span>
+      </button>
+      <h2 data-i18n="cp_title">Scientific Advisory Plan</h2>
+      <button class="back-btn"><span class="material-symbols-rounded">volume_up</span></button>
+    </div>
+    <div class="roi-banner">
+      <span class="material-symbols-rounded" style="color:var(--green-600);">insights</span>
+      <p data-i18n="cp_roi_msg" data-i18n-html>100% unbiased scientific timeline. Following this generic plan can increase your yield by <strong>+18%</strong>.</p>
+    </div>
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-step completed">
+      <div class="step-indicator">1</div>
+      <div class="step-content">
+        <h3 data-i18n="cp_m1">Month 1: Preparation</h3>
+        <div class="step-meta">
+          <span class="material-symbols-rounded" style="font-size:14px;">calendar_month</span> Soil health testing & deep summer ploughing.
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-step completed">
+      <div class="step-indicator">2</div>
+      <div class="step-content">
+        <h3 data-i18n="cp_m2">Month 2: Sowing & Nutrition</h3>
+        <div class="step-meta">
+          <span class="material-symbols-rounded" style="font-size:14px;">calendar_month</span> Sowing with seed-drill machines & applying generic basal doses (NPK).
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-step active">
+      <div class="step-indicator">3</div>
+      <div class="step-content">
+        <div style="display:flex; justify-content:space-between;">
+          <h3 data-i18n="cp_m3">Month 3: Irrigation & Weeds</h3>
+          <span class="badge badge-green" data-i18n="cp_this_week">This Month</span>
+        </div>
+        <div class="step-meta">
+          <span class="material-symbols-rounded" style="font-size:14px;">calendar_month</span> Precision irrigation (drip/sprinkler scheduling) & organic weed management.
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-step">
+      <div class="step-indicator">4</div>
+      <div class="step-content">
+        <h3 data-i18n="cp_m4">Month 4: Pest Management</h3>
+        <div class="step-meta">
+          <span class="material-symbols-rounded" style="font-size:14px;">calendar_month</span> Integrated Pest Management (IPM) using neem-based or generic chemical sprays.
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-step">
+      <div class="step-indicator">5</div>
+      <div class="step-content">
+        <h3 data-i18n="cp_m5">Month 5: Harvest & Soil</h3>
+        <div class="step-meta">
+          <span class="material-symbols-rounded" style="font-size:14px;">calendar_month</span> Optimized harvesting & stubble management (avoiding burning) to retain soil carbon.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     SCREEN 4: Expert Chat
+     ============================================ -->
+<section class="screen" id="screen-expert">
+  <div class="chat-header">
+    <button class="back-btn" onclick="navigateTo('screen-dashboard')" style="margin-left:-8px;">
+      <span class="material-symbols-rounded">arrow_back</span>
+    </button>
+    <div class="expert-avatars">
+      <div style="background:var(--green-100); color:var(--green-700); position:relative;">
+        🤖
+        <span class="online-pulse"></span>
+      </div>
+    </div>
+    <div style="flex:1;">
+      <h3 style="font-size:1rem; margin-bottom:2px;" data-i18n="chat_title">AgriBot — AI Advisor</h3>
+      <p style="font-size:0.75rem; color:var(--green-600); font-weight:500;" data-i18n="chat_online">🟢 Online · Free Advisory</p>
+    </div>
+    <button class="btn-icon" onclick="clearChat()" title="Clear chat" style="color:var(--gray-400);">
+      <span class="material-symbols-rounded">delete_sweep</span>
+    </button>
+  </div>
+
+  <div style="background:var(--green-50); padding:8px; text-align:center; font-size:0.75rem; color:var(--green-800); border-bottom:1px solid var(--green-100);" data-i18n="chat_secure">
+    100% unbiased. Powered by Gemini AI. We never promote specific brands.
+  </div>
+
+  <div class="chat-messages" id="chatMessages">
+    <div class="chat-bubble ai">
+      <div class="bubble-header">
+        <div class="bubble-avatar ai-avatar">🤖</div>
+        AgriBot
+      </div>
+      <div class="bubble-body" data-i18n="chat_ai_welcome">
+        Namaste! I'm AgriBot, your free AI farming advisor. Ask me anything about crops, pests, soil, fertilizers, irrigation, or government schemes. How can I help you today?
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Suggestion Chips -->
+  <div class="chat-quick-chips" id="chatQuickChips">
+    <div class="quick-chip" onclick="sendQuickQuestion('What pests should I watch out for my crop right now?')">🦗 Pest alert for my crop</div>
+    <div class="quick-chip" onclick="sendQuickQuestion('How much fertilizer should I apply this week?')">🌱 Fertilizer dosage</div>
+    <div class="quick-chip" onclick="sendQuickQuestion('What government schemes am I eligible for?')">📋 Govt. schemes</div>
+    <div class="quick-chip" onclick="sendQuickQuestion('How can I save water in irrigation?')">💧 Water saving tips</div>
+  </div>
+
+  <div class="chat-input-area">
+    <input type="text" id="chatInput" placeholder="Ask anything about farming..."
+      data-i18n="chat_placeholder"
+      onkeydown="if(event.key==='Enter' && !event.shiftKey){ event.preventDefault(); sendChatMessage(); }">
+    <button class="btn-send" onclick="sendChatMessage()">
+      <span class="material-symbols-rounded">send</span>
+    </button>
+  </div>
+</section>
+
+
+<!-- ============================================
+     SCREEN 5: Pest & Disease (Unbiased)
+     ============================================ -->
+<section class="screen" id="screen-pest">
+  <div class="top-bar">
+    <button class="back-btn" onclick="navigateTo('screen-dashboard')">
+      <span class="material-symbols-rounded">arrow_back</span>
+    </button>
+    <h2 data-i18n="pest_title">Pest & Disease Help</h2>
+    <button class="back-btn"><span class="material-symbols-rounded">search</span></button>
+  </div>
+
+  <!-- Grid View -->
+  <div id="pestGrid">
+    <div style="padding:var(--space-4) var(--space-4) 0;">
+      <p class="text-sm text-muted" data-i18n="pest_info" data-i18n-html>Scientific database for <strong>Basmati Rice</strong> pests in your region. Tap for generic treatments.</p>
+    </div>
+    
+    <div class="pest-grid">
+      <div class="pest-card" onclick="showPestDetail(0)">
+        <div class="pest-img" style="background:linear-gradient(135deg, #fef3c7, #fde68a);">🦗</div>
+        <div class="pest-info-card">
+          <h4>Brown Plant Hopper</h4>
+          <p>High Risk Warning</p>
+        </div>
+      </div>
+      <div class="pest-card" onclick="showPestDetail(1)">
+        <div class="pest-img" style="background:linear-gradient(135deg, #d8f3dc, #95d5b2);">🍄</div>
+        <div class="pest-info-card">
+          <h4>Rice Blast (Fungal)</h4>
+          <p>Medium Risk</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Detail Panel -->
+  <div id="pestDetailPanel" class="pest-detail-panel">
+    <div class="pest-hero" id="pestDetailImg" style="background:var(--earth-50);">🦗</div>
+    <div class="pest-detail-content">
+      <button class="btn btn-outline btn-sm" onclick="hidePestDetail()" style="margin-bottom:var(--space-4);">
+        <span class="material-symbols-rounded" style="font-size:16px;">arrow_back</span>
+        <span data-i18n="pest_back">Back</span>
+      </button>
+      
+      <h2 id="pestDetailName" style="font-size:1.5rem; margin-bottom:8px;">Brown Plant Hopper (BPH)</h2>
+      <p id="pestDetailDesc" style="color:var(--gray-600); font-size:0.95rem; line-height:1.5;">BPH adults and nymphs suck plant sap from the base of the rice plant. Heavily infested crops dry up, forming patches known as 'hopper burn'.</p>
+
+      <div class="treatment-step">
+        <h3 style="font-size:1.1rem; margin-bottom:12px;" data-i18n="pest_treatment">Scientific Action Plan:</h3>
+        
+        <div class="treatment-item">
+          <div class="step-num">1</div>
+          <div>
+            <strong>Cultural Control</strong>
+            <p class="text-sm mt-1 text-muted">Drain the field for 3-4 days during the early stage of infestation. Avoid excessive use of Nitrogen fertilizers.</p>
+          </div>
+        </div>
+
+        <div class="treatment-item">
+          <div class="step-num" style="background:var(--blue-100); color:var(--blue-700);">2</div>
+          <div>
+            <strong>Chemical Composition (Generic)</strong>
+            <p class="text-sm mt-1 text-muted">If Economic Threshold Level (ETL) crosses 5-10 hoppers/hill: Spray <strong>Imidacloprid 17.8% SL</strong> @ 40 ml/acre OR <strong>Pymetrozine 50% WG</strong> @ 120 g/acre.</p>
+            <span class="badge badge-gray mt-2">Ask your local dealer for these generic salts. We do not endorse brands.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     SCREEN 6: Profit & Yield Calculator
+     ============================================ -->
+<section class="screen" id="screen-market">
+  <div class="top-bar">
+    <button class="back-btn" onclick="navigateTo('screen-dashboard')">
+      <span class="material-symbols-rounded">arrow_back</span>
+    </button>
+    <h2 data-i18n="calc_title">Yield &amp; Profit Calculator</h2>
+    <div style="width:40px;"></div>
+  </div>
+
+  <div class="calc-hero">
+    <h2 data-i18n="calc_hero_title">Project Your 2x Profit</h2>
+    <p data-i18n="calc_hero_desc">Enter your farm details below to see your projected profit using modern scientific methods.</p>
+  </div>
+
+  <div class="calculator-panel">
+
+    <!-- Crop Type Selector -->
+    <div class="calc-field-group">
+      <label class="calc-label">
+        <span class="material-symbols-rounded">grass</span>
+        Crop Type
+      </label>
+      <select id="calcCropType" class="calc-select" onchange="updateCropPrice()">
+        <option value="3800">Basmati Rice — ₹3,800/Qt</option>
+        <option value="2200">Wheat — ₹2,200/Qt</option>
+        <option value="6500">Cotton — ₹6,500/Qt</option>
+        <option value="4200">Maize — ₹4,200/Qt (Hybrid)</option>
+        <option value="5000">Soybean — ₹5,000/Qt</option>
+        <option value="7500">Mustard — ₹7,500/Qt</option>
+      </select>
+    </div>
+
+    <!-- Input grid -->
+    <div class="calc-inputs-grid">
+
+      <div class="calc-input-card" id="calc-card-acres">
+        <div class="calc-input-icon" style="background:var(--green-100);color:var(--green-700);">🌾</div>
+        <div class="calc-input-body">
+          <div class="calc-input-label" data-i18n="calc_farm_size">Land Size</div>
+          <div class="calc-input-row">
+            <input type="number" id="calcAcres" class="calc-num-input"
+              value="4.5" min="0.5" max="500" step="0.5"
+              oninput="validateCalcInput(this, 0.5, 500)">
+            <span class="calc-unit">Acres</span>
+          </div>
+          <div class="calc-hint">Min 0.5 — Max 500</div>
+        </div>
+      </div>
+
+      <div class="calc-input-card" id="calc-card-yield">
+        <div class="calc-input-icon" style="background:var(--earth-50);color:var(--earth-700);">📦</div>
+        <div class="calc-input-body">
+          <div class="calc-input-label" data-i18n="calc_current_yield">Expected Yield</div>
+          <div class="calc-input-row">
+            <input type="number" id="calcYield" class="calc-num-input"
+              value="18" min="1" max="100" step="0.5"
+              oninput="validateCalcInput(this, 1, 100)">
+            <span class="calc-unit">Qt/Acre</span>
+          </div>
+          <div class="calc-hint">Quintals per acre</div>
+        </div>
+      </div>
+
+      <div class="calc-input-card" id="calc-card-cost">
+        <div class="calc-input-icon" style="background:var(--blue-100);color:var(--blue-700);">💰</div>
+        <div class="calc-input-body">
+          <div class="calc-input-label" data-i18n="calc_cost">Investment/Acre</div>
+          <div class="calc-input-row">
+            <span class="calc-prefix">₹</span>
+            <input type="number" id="calcCost" class="calc-num-input"
+              value="12000" min="1000" max="100000" step="500"
+              oninput="validateCalcInput(this, 1000, 100000)">
+          </div>
+          <div class="calc-hint">Total cost per acre</div>
+        </div>
+      </div>
+
+      <div class="calc-input-card" id="calc-card-price">
+        <div class="calc-input-icon" style="background:var(--orange-100);color:var(--orange-500);">🏷️</div>
+        <div class="calc-input-body">
+          <div class="calc-input-label">Market Price</div>
+          <div class="calc-input-row">
+            <span class="calc-prefix">₹</span>
+            <input type="number" id="calcMarketPrice" class="calc-num-input"
+              value="3800" min="500" max="50000" step="100"
+              oninput="validateCalcInput(this, 500, 50000)">
+            <span class="calc-unit">/Qt</span>
+          </div>
+          <div class="calc-hint">Price you sell at</div>
+        </div>
+      </div>
+
+    </div><!-- end calc-inputs-grid -->
+
+    <div id="calcError" class="calc-error-msg" style="display:none;"></div>
+
+    <button class="btn btn-cta btn-full" onclick="calculate2xProfit()" style="margin-top:var(--space-4);">
+      <span class="material-symbols-rounded">insights</span>
+      <span data-i18n="calc_btn">Calculate My Profit Projection</span>
+    </button>
+
+    <!-- Projection Card -->
+    <div class="projection-card" id="projectionCard">
+      <div class="projection-title" data-i18n="calc_proj_title">Projected Net Profit</div>
+
+      <div class="proj-compare">
+        <div class="proj-col traditional">
+          <div class="proj-col-label">Traditional</div>
+          <div class="proj-col-value" id="breakdownTrad">₹0</div>
+        </div>
+        <div class="proj-arrow">→</div>
+        <div class="proj-col modern">
+          <div class="proj-col-label">Modern Methods</div>
+          <div class="proj-col-value" id="breakdownMod">₹0</div>
+        </div>
+      </div>
+
+      <div class="proj-net">
+        <div style="font-size:0.85rem; color:var(--gray-500); margin-bottom:4px;">Net Modern Profit</div>
+        <div class="projection-value" id="projNetProfit">₹0</div>
+        <div class="projection-subtext" id="projBoost"></div>
+      </div>
+
+      <div class="proj-methodology">
+        <span class="material-symbols-rounded" style="font-size:16px;color:var(--green-600);">science</span>
+        <span data-i18n="calc_why">Assumptions: +15% yield via IPM, −20% cost via precision farming.</span>
+      </div>
+
+      <button class="btn btn-outline btn-sm btn-full mt-3" onclick="navigateTo('screen-learning')">
+        <span class="material-symbols-rounded">school</span>
+        Watch Academy Videos to Achieve This
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================
+     SCREEN 7: Modern Farming Video Academy
+     ============================================ -->
+<section class="screen" id="screen-learning">
+  <div class="academy-header">
+    <h2 data-i18n="academy_title">Video Academy</h2>
+  </div>
+
+  <div class="chips-container chip-group">
+    <div class="chip active" data-i18n="learn_all">🔥 Top Converting</div>
+    <div class="chip" data-i18n="learn_yield">📈 2x Profit Series</div>
+    <div class="chip" data-i18n="learn_organic">🌱 Organic Methods</div>
+  </div>
+
+  <div class="video-feed">
+    <div class="video-card" onclick="openVideoPlayer('Modern Techniques to 2x Your Profit', 'Learn how reducing unnecessary chemical inputs and adopting precision irrigation can literally double your margins in one season.')">
+      <div class="video-thumbnail" style="background:linear-gradient(135deg, #10b981, #047857);">
+        📈
+        <div class="play-button">
+          <span class="material-symbols-rounded">play_arrow</span>
+        </div>
+        <span class="video-duration">12:40</span>
+      </div>
+      <div class="video-meta">
+        <h4>Modern Techniques to 2x Your Profit</h4>
+        <p><span>🟢 AgriProfit Philanthropy</span><span>·</span><span>142K views</span></p>
+      </div>
+    </div>
+
+    <div class="video-card" onclick="openVideoPlayer('Precision Irrigation: Save Water, Boost Yield', 'Stop flooding your fields. Learn alternate wetting and drying (AWD) methods for Basmati rice.')">
+      <div class="video-thumbnail" style="background:linear-gradient(135deg, #3b82f6, #1d4ed8);">
+        💧
+        <div class="play-button">
+          <span class="material-symbols-rounded">play_arrow</span>
+        </div>
+        <span class="video-duration">8:15</span>
+      </div>
+      <div class="video-meta">
+        <h4>Precision Irrigation: Save Water, Boost Yield</h4>
+        <p><span>🟢 Expert Agronomist</span><span>·</span><span>89K views</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fullscreen Video Player Interface -->
+  <div class="video-player-container" id="videoPlayer">
+    <div class="video-player-header">
+      <button class="back-btn" style="color:white; background:rgba(255,255,255,0.2);" onclick="closeVideoPlayer()">
+        <span class="material-symbols-rounded">keyboard_arrow_down</span>
+      </button>
+      <div style="font-weight:600; font-size:0.9rem;" data-i18n="academy_now_playing">Now Playing</div>
+    </div>
+
+    <div class="video-frame">
+      <span class="material-symbols-rounded">play_circle</span>
+    </div>
+
+    <div class="video-takeaways">
+      <h3 id="vpTitle" style="font-size:1.2rem; margin-bottom:8px;">Video Title</h3>
+      <p id="vpDesc" style="color:var(--gray-600); font-size:0.9rem; margin-bottom:var(--space-6);">Video description goes here.</p>
+
+      <h4 style="font-size:1rem; margin-bottom:var(--space-4); border-bottom:2px solid var(--green-100); padding-bottom:8px;" data-i18n="academy_takeaways">📝 Step-by-Step Takeaways</h4>
+      
+      <div class="takeaway-step">
+        <div class="takeaway-icon">1</div>
+        <div class="takeaway-content">
+          <h4>Soil Testing First</h4>
+          <p>Never apply generic fertilizers blindly. A ₹300 soil test saves you ₹3,000 in excess urea.</p>
+        </div>
+      </div>
+      
+      <div class="takeaway-step">
+        <div class="takeaway-icon">2</div>
+        <div class="takeaway-content">
+          <h4>Integrated Pest Management (IPM)</h4>
+          <p>Rely on pheromone traps and beneficial insects before resorting to expensive chemical sprays.</p>
+        </div>
+      </div>
+
+      <div class="takeaway-step">
+        <div class="takeaway-icon">3</div>
+        <div class="takeaway-content">
+          <h4>Alternate Wetting and Drying (AWD)</h4>
+          <p>Allow the soil to dry out a few days before re-flooding. It saves 30% water and strengthens roots.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     SCREEN 8: Government Schemes Hub
+     ============================================ -->
+<section class="screen" id="screen-schemes">
+  <!-- Remains same, fits unbiased philanthropy -->
+  <div class="top-bar">
+    <button class="back-btn" onclick="navigateTo('screen-dashboard')">
+      <span class="material-symbols-rounded">arrow_back</span>
+    </button>
+    <h2 data-i18n="schemes_title">Govt. Schemes</h2>
+    <div style="width:40px;"></div>
+  </div>
+  <div style="padding:var(--space-4);">
+    <button class="btn btn-cta btn-full" onclick="openEligibilityQuiz()">
+      <span class="material-symbols-rounded">assignment_turned_in</span>
+      <span data-i18n="schemes_eligible_btn">Am I Eligible? — Quick Check</span>
+    </button>
+  </div>
+  <div class="scheme-list" id="schemeList">
+    <div class="scheme-card" data-status="active">
+      <div class="scheme-icon" style="background:var(--green-100); color:var(--green-700);">₹</div>
+      <div class="scheme-info">
+        <h4>PM-KISAN Samman Nidhi</h4>
+        <p>Income support of ₹6,000/year</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     SCREEN 9: Community
+     ============================================ -->
+<section class="screen" id="screen-community">
+  <div class="top-bar">
+    <h2 data-i18n="community_title">Community Forum</h2>
+    <div class="lang-switch-mini" style="background:var(--green-100); color:var(--green-700);">Karnal, HR</div>
+  </div>
+
+  <div class="post-feed" style="margin-top:var(--space-4);">
+    <div class="post-card">
+      <div class="post-author">
+        <div class="author-avatar">👨‍🌾</div>
+        <div class="author-info">
+          <div class="author-name">Sukhbir Singh <span class="badge badge-earth"><span class="material-symbols-rounded" style="font-size:10px;">star</span> Lead Farmer</span></div>
+          <div class="author-meta">Taraori, Karnal · 2 hours ago</div>
+        </div>
+      </div>
+      <div class="post-content">
+        Just followed the AWD method from the Academy video. It actually works! Saved a lot on diesel for the pump this week.
+      </div>
+      <div class="post-actions">
+        <div class="post-action" onclick="toggleUpvote(this)"><span class="material-symbols-rounded">thumb_up</span><span>124</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     SCREEN 10: Profile & Settings
+     ============================================ -->
+<section class="screen" id="screen-profile">
+  <div class="profile-header">
+    <div class="profile-avatar">👨‍🌾</div>
+    <h2 id="profileName">Rajesh Kumar</h2>
+    <p>AgriStack ID: HR-KNL-1244-5902</p>
+  </div>
+
+  <div class="profile-body">
+    <div class="profile-section">
+      <h3 data-i18n="profile_land"><span class="material-symbols-rounded">landscape</span> Farm Profile</h3>
+      <div class="stat-grid" style="grid-template-columns: repeat(3,1fr);">
+        <div class="stat-card"><div class="stat-value" style="font-size:1.1rem;" id="profAcres">4.2</div><div class="stat-label">Acres</div></div>
+        <div class="stat-card"><div class="stat-value" style="font-size:1rem;" id="profCrop">Basmati</div><div class="stat-label">Crop</div></div>
+        <div class="stat-card"><div class="stat-value" style="font-size:1rem;" id="profSoil">Clay</div><div class="stat-label">Soil</div></div>
+      </div>
+    </div>
+
+    <!-- Settings -->
+    <div class="profile-section">
+      <h3 data-i18n="profile_settings"><span class="material-symbols-rounded">settings</span> Settings</h3>
+      
+      <div class="setting-item">
+        <div class="setting-info">
+          <span class="material-symbols-rounded">translate</span>
+          <span data-i18n="profile_language">Language</span>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button class="lang-option active" data-lang="en">EN</button>
+          <button class="lang-option" data-lang="hi">हिं</button>
+          <button class="lang-option" data-lang="mr">मरा</button>
+        </div>
+      </div>
+      
+      <div class="setting-item" onclick="startTour()">
+        <div class="setting-info">
+          <span class="material-symbols-rounded">route</span>
+          <strong style="color:var(--green-600);" data-i18n="profile_take_tour">🎯 Take App Tour</strong>
+        </div>
+        <span class="material-symbols-rounded" style="color:var(--gray-400);">chevron_right</span>
+      </div>
+    </div>
+
+    <button class="btn btn-outline btn-full" onclick="navigateTo('screen-login')" style="margin-top:8px; color:var(--red-500); border-color:var(--red-500);">
+      <span class="material-symbols-rounded">logout</span>
+      <span data-i18n="profile_logout">Logout</span>
+    </button>
+    <p class="text-xs text-muted text-center" style="margin-top:16px; padding-bottom:24px;">AgriProfit Advisory v3.0 · Built 100% for Farmer Welfare</p>
+  </div>
+</section>
+
+<!-- ============================================
+     Bottom Navigation
+     ============================================ -->
+<nav class="bottom-nav" id="bottomNav">
+  <button class="nav-item active" onclick="navigateTo('screen-dashboard')" data-screen="screen-dashboard" id="nav-home" type="button">
+    <span class="material-symbols-rounded">home</span>
+    <span data-i18n="nav_home">Home</span>
+  </button>
+  <button class="nav-item" onclick="navigateTo('screen-crop-planning')" data-screen="screen-crop-planning" id="nav-plan" type="button">
+    <span class="material-symbols-rounded">science</span>
+    <span data-i18n="nav_crop_plan">Advisory</span>
+  </button>
+  <button class="nav-item" onclick="navigateTo('screen-learning')" data-screen="screen-learning" id="nav-learn" type="button">
+    <span class="material-symbols-rounded">school</span>
+    <span data-i18n="nav_learn">Academy</span>
+  </button>
+  <button class="nav-item" onclick="navigateTo('screen-market')" data-screen="screen-market" id="nav-market" type="button">
+    <span class="material-symbols-rounded">calculate</span>
+    <span data-i18n="nav_market">Calc</span>
+  </button>
+  <button class="nav-item" onclick="navigateTo('screen-profile')" data-screen="screen-profile" id="nav-profile" type="button">
+    <span class="material-symbols-rounded">person</span>
+    <span data-i18n="more_profile">Profile</span>
+  </button>
+</nav>
+
+<!-- ============================================
+     Virtual Tour Overlay
+     ============================================ -->
+<div class="tour-overlay" id="tourOverlay">
+  <div class="tour-spotlight" id="tourSpotlight"></div>
+  <div class="tour-tooltip" id="tourTooltip">
+    <div class="tour-header">
+      <span class="tour-step-indicator" id="tourStepIndicator">1 of 5</span>
+      <button class="tour-skip" onclick="endTour()" data-i18n="tour_skip">Skip Tour</button>
+    </div>
+    <h3 class="tour-title" id="tourTitle">Title</h3>
+    <p class="tour-desc" id="tourDesc">Description goes here.</p>
+    <div class="tour-actions">
+      <button class="tour-btn tour-btn-secondary" id="tourPrevBtn" onclick="prevTourStep()" data-i18n="tour_prev">← Back</button>
+      <button class="tour-btn tour-btn-primary" id="tourNextBtn" onclick="nextTourStep()" data-i18n="tour_next">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     Eligibility Quiz Modal
+     ============================================ -->
+<div class="eligibility-modal" id="eligibilityModal">
+  <div class="eligibility-modal-content">
+    <h3 style="font-size:1.1rem; margin-bottom:var(--space-4);">&#x1F4CB; Quick Eligibility Check</h3>
+
+    <p class="text-sm text-muted" style="margin-bottom:var(--space-4);">Answer a few quick questions to see which schemes you qualify for.</p>
+
+    <div class="quiz-question">
+      <p style="font-weight:600; margin-bottom:8px;">1. Are you a registered farmer with a government ID?</p>
+      <div class="quiz-options">
+        <div class="quiz-option" onclick="selectQuizOption(this)" data-val="yes">&#x2705; Yes</div>
+        <div class="quiz-option" onclick="selectQuizOption(this)" data-val="no">&#x274C; No</div>
+      </div>
+    </div>
+
+    <div class="quiz-question" style="margin-top:var(--space-4);">
+      <p style="font-weight:600; margin-bottom:8px;">2. Do you own farmland (not tenant)?</p>
+      <div class="quiz-options">
+        <div class="quiz-option" onclick="selectQuizOption(this)" data-val="yes">&#x2705; Yes</div>
+        <div class="quiz-option" onclick="selectQuizOption(this)" data-val="no">&#x274C; No</div>
+      </div>
+    </div>
+
+    <div id="quizResult" class="quiz-result"></div>
+
+    <button class="btn btn-cta btn-full" style="margin-top:var(--space-4);" onclick="checkEligibility()">
+      <span class="material-symbols-rounded">verified</span>
+      Check My Eligibility
+    </button>
+    <button class="btn btn-outline btn-full" style="margin-top:8px;" onclick="document.getElementById('eligibilityModal').classList.remove('active')">
+      Close
+    </button>
+  </div>
+</div>
+
+<!-- FAB: Expert Chat -->
+<button class="fab" id="fabChat" onclick="navigateTo('screen-expert')" title="Ask AI">
+  <span class="material-symbols-rounded">psychology</span>
+</button>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+      for(let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+</script>
+<script src="app.js?v=5"></script>
+</body>
+</html>
