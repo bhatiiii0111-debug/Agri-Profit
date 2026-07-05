@@ -16,6 +16,8 @@ Unlike traditional agro-chemical retailers that heavily promote branded products
 * **🛡️ Secure Architecture:** 
   * API keys are shielded from the frontend through a lightweight Python proxy server.
 
+For a detailed look at the internal components and workflows (including Mermaid diagrams of the fallback system), check out the [Architecture & Workflows Guide](docs/ARCHITECTURE.md).
+
 ## 🛠️ Tech Stack
 
 * **Frontend:** Vanilla JavaScript, HTML5, CSS3.
