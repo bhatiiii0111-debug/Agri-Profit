@@ -4,6 +4,18 @@ AgriProfit is an interactive, completely unbiased AI crop advisory platform buil
 
 Unlike traditional agro-chemical retailers that heavily promote branded products, AgriProfit acts as an honest, philanthropic expert. It provides localized advice on pest management, soil health, crop cycles, and more, prioritizing organic methods and generic chemical formulations.
 
+---
+
+## 🌐 Live Demo — Try It Now!
+
+> **👉 [agri-profit-iota.vercel.app](https://agri-profit-iota.vercel.app)**
+
+Experience AgriProfit live! Click the link above to explore the full app — chat with the AI advisor, browse the modern farming roadmap, and see how localized crop advisory works in action.
+
+💬 *We'd love to hear your feedback! If you have suggestions, ideas, or found a bug, feel free to [open an issue](https://github.com/bhatiiii0111-debug/Agri-Profit/issues) or reach out. Your views help us build a better tool for our farmers.*
+
+---
+
 ## 🚀 Key Features
 
 * **🤖 AgriBot (AI Crop Advisor):** 
