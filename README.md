@@ -16,8 +16,66 @@ Unlike traditional agro-chemical retailers that heavily promote branded products
 * **🛡️ Secure Architecture:** 
   * API keys are shielded from the frontend through a lightweight Python proxy server.
 
-For a detailed look at the internal components and workflows (including Mermaid diagrams of the fallback system), check out the [Architecture & Workflows Guide](docs/ARCHITECTURE.md).
+## 🏗️ Architecture & Workflows
 
+### 1. Secure AI Fallback Mechanism
+To ensure 100% uptime, the AI chatbot utilizes a cascading fallback mechanism. If the primary cloud AI provider fails (due to rate limits, network issues, or revoked keys), it gracefully degrades to a local offline knowledge base.
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Frontend as App.js (Frontend)
+    participant Proxy as Server.py (Proxy)
+    participant Groq as Groq API
+    participant Offline as Offline KB
+
+    User->>Frontend: Asks "What is best fertilizer for wheat?"
+    Frontend->>Proxy: POST /api/chat
+    
+    rect rgb(240, 248, 255)
+        Note over Proxy, Groq: Primary Strategy (Cloud AI)
+        Proxy->>Groq: Request with Secure API Key
+        alt Success
+            Groq-->>Proxy: 200 OK (AI Response)
+            Proxy-->>Frontend: 200 OK (AI Response)
+            Frontend-->>User: Displays AI Answer
+        else Failure (e.g., 403 or 429 Error)
+            Groq-->>Proxy: 4xx/5xx Error
+            Proxy-->>Frontend: 4xx/5xx Error
+        end
+    end
+
+    rect rgb(255, 240, 240)
+        Note over Frontend, Offline: Fallback Strategy (Offline)
+        Frontend->>Frontend: Catches Error
+        Frontend->>Offline: Query local keyword rules
+        Offline-->>Frontend: Match found for "fertilizer" + "wheat"
+        Frontend-->>User: Displays offline pre-programmed advice
+    end
+```
+
+### 2. User Journey Flowchart
+The following flowchart illustrates the user's journey from landing on the application to receiving localized advisory.
+
+```mermaid
+flowchart TD
+    Start([Launch AgriProfit]) --> Login{Is User Registered?}
+    
+    Login -->|No| Reg[Registration Screen]
+    Reg --> Input[Input Name, State, District, Crop, Acres]
+    Input --> Save[Save Profile to LocalStorage]
+    Save --> Dash
+    
+    Login -->|Yes| Dash[Dashboard]
+    
+    Dash --> Chat[💬 Chat with AgriBot]
+    Dash --> Roadmap[🚜 View Modern Farming Roadmap]
+    Dash --> Weather[🌦️ Check Weather (Mocked)]
+    Dash --> Academy[🎓 Read Agri-Academy Articles]
+    
+    Chat --> Localized[AI uses Profile Data for Context]
+    Localized --> Advice[Receive Hyper-localized Advice]
+```
 ## 🛠️ Tech Stack
 
 * **Frontend:** Vanilla JavaScript, HTML5, CSS3.
