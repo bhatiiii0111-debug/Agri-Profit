@@ -1084,6 +1084,261 @@ h1, h2, h3, h4, h5 {
 }
 
 /* ============================================
+   Modern Farming Roadmap Section
+   ============================================ */
+.roadmap-section {
+  padding: var(--space-4);
+  padding-bottom: var(--space-6);
+  background: linear-gradient(180deg, var(--gray-50) 0%, white 100%);
+}
+
+.roadmap-header {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: var(--space-4);
+  padding: var(--space-4);
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--green-100);
+}
+
+.roadmap-header h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--gray-900);
+  margin-bottom: 4px;
+}
+
+/* Comparison Banner */
+.compare-banner {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: var(--space-4);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.compare-side {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: var(--space-3) var(--space-4);
+}
+
+.compare-side.traditional {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+}
+
+.compare-side.traditional .material-symbols-rounded {
+  font-size: 24px;
+  color: #92400e;
+}
+
+.compare-side.traditional strong {
+  color: #92400e;
+  font-size: 0.85rem;
+}
+
+.compare-side.traditional p {
+  font-size: 0.75rem;
+  color: #a16207;
+  margin: 0;
+}
+
+.compare-side.modern {
+  background: linear-gradient(135deg, #d1fae5 0%, #6ee7b7 100%);
+}
+
+.compare-side.modern .material-symbols-rounded {
+  font-size: 24px;
+  color: #065f46;
+}
+
+.compare-side.modern strong {
+  color: #065f46;
+  font-size: 0.85rem;
+}
+
+.compare-side.modern p {
+  font-size: 0.75rem;
+  color: #047857;
+  margin: 0;
+}
+
+.compare-arrow {
+  background: white;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 0 8px rgba(0,0,0,0.08);
+  z-index: 1;
+  border-radius: 50%;
+  margin: 0 -12px;
+}
+
+.compare-arrow .material-symbols-rounded {
+  font-size: 20px;
+  color: var(--green-600);
+}
+
+/* Roadmap Cards */
+.roadmap-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  margin-bottom: 12px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-100);
+  overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.roadmap-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  border-color: var(--green-200);
+}
+
+.roadmap-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: var(--space-3) var(--space-4);
+}
+
+.roadmap-phase-badge {
+  background: linear-gradient(135deg, var(--green-500), var(--green-600));
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+
+.roadmap-card-title {
+  flex: 1;
+}
+
+.roadmap-card-title h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 2px;
+  color: var(--gray-900);
+}
+
+.roadmap-duration {
+  font-size: 0.72rem;
+  color: var(--gray-400);
+  font-weight: 500;
+}
+
+.roadmap-expand-icon {
+  color: var(--gray-400);
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.roadmap-card.expanded .roadmap-expand-icon {
+  transform: rotate(180deg);
+}
+
+/* Expandable Body */
+.roadmap-card-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.35s ease;
+  padding: 0 var(--space-4);
+}
+
+.roadmap-card.expanded .roadmap-card-body {
+  max-height: 500px;
+  padding: 0 var(--space-4) var(--space-4);
+}
+
+/* Stop / Start Change Blocks */
+.roadmap-change {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.change-from, .change-to {
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.change-from {
+  background: #fef2f2;
+  border-left: 3px solid #ef4444;
+}
+
+.change-to {
+  background: #f0fdf4;
+  border-left: 3px solid #22c55e;
+}
+
+.change-label {
+  font-weight: 700;
+  font-size: 0.75rem;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.change-from .change-label { color: #dc2626; }
+.change-to .change-label { color: #16a34a; }
+
+.change-from p, .change-to p {
+  margin: 0;
+  color: var(--gray-700);
+}
+
+/* Impact Metric */
+.roadmap-impact {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #065f46;
+}
+
+.roadmap-impact .material-symbols-rounded {
+  font-size: 18px;
+  color: var(--green-600);
+}
+
+/* CTA Card */
+.roadmap-cta {
+  text-align: center;
+  padding: var(--space-5);
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 2px dashed var(--green-300);
+  margin-top: var(--space-4);
+}
+
+.roadmap-cta p {
+  font-size: 0.85rem;
+  color: var(--gray-600);
+  margin: var(--space-3) 0;
+}
+
+/* ============================================
    Screen 4: Expert Chat
    ============================================ */
 #screen-expert {
@@ -1522,6 +1777,7 @@ h1, h2, h3, h4, h5 {
   outline: none;
   border-radius: 4px;
   -webkit-appearance: none;
+  appearance: none;
 }
 
 .range-slider::-webkit-slider-thumb {

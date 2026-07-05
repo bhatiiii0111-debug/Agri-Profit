@@ -84,6 +84,26 @@ const translations = {
     cp_m4: "Month 4: Pest Management",
     cp_m5: "Month 5: Harvest & Soil",
 
+    // Roadmap
+    rm_title: "Roadmap: Traditional → Modern Farming",
+    rm_subtitle: "A step-by-step transition plan to double your profit using scientific methods.",
+    rm_trad: "Traditional",
+    rm_modern: "Modern",
+    rm_p1_title: "🌱 Soil Health Foundation",
+    rm_p1_time: "Week 1-2",
+    rm_p2_title: "🌾 Seed Selection & Treatment",
+    rm_p2_time: "Week 2-3",
+    rm_p3_title: "💧 Smart Water Management",
+    rm_p3_time: "Week 3-4",
+    rm_p4_title: "🐛 IPM Pest & Disease Control",
+    rm_p4_time: "Week 4-6",
+    rm_p5_title: "📊 Data-Driven Decisions",
+    rm_p5_time: "Week 6-8",
+    rm_p6_title: "🚀 Harvest & Post-Harvest",
+    rm_p6_time: "Week 8-10",
+    rm_cta: "Have questions about any phase? Ask AgriBot for personalized advice based on your farm profile.",
+    rm_cta_btn: "💬 Ask AgriBot Now",
+
     // Chat
     chat_title: "Philanthropic AI + Expert",
     chat_online: "🟢 Online · Free Advisory",
@@ -204,6 +224,26 @@ const translations = {
     cp_yield_increase: "लक्ष्य: मजबूत कल्ले बढ़ाना",
     cp_pest_mgmt: "निवारक कीट नियंत्रण",
 
+    // Roadmap
+    rm_title: "रोडमैप: पारंपरिक → आधुनिक खेती",
+    rm_subtitle: "वैज्ञानिक तरीकों से अपना मुनाफा दोगुना करने की चरणबद्ध योजना।",
+    rm_trad: "पारंपरिक",
+    rm_modern: "आधुनिक",
+    rm_p1_title: "🌱 मिट्टी स्वास्थ्य की नींव",
+    rm_p1_time: "सप्ताह 1-2",
+    rm_p2_title: "🌾 बीज चयन और उपचार",
+    rm_p2_time: "सप्ताह 2-3",
+    rm_p3_title: "💧 स्मार्ट जल प्रबंधन",
+    rm_p3_time: "सप्ताह 3-4",
+    rm_p4_title: "🐛 IPM कीट और रोग नियंत्रण",
+    rm_p4_time: "सप्ताह 4-6",
+    rm_p5_title: "📊 डेटा-आधारित निर्णय",
+    rm_p5_time: "सप्ताह 6-8",
+    rm_p6_title: "🚀 कटाई और कटाई के बाद",
+    rm_p6_time: "सप्ताह 8-10",
+    rm_cta: "किसी भी चरण के बारे में सवाल हैं? AgriBot से अपनी खेत प्रोफ़ाइल के आधार पर सलाह लें।",
+    rm_cta_btn: "💬 AgriBot से पूछें",
+
     // Chat
     chat_title: "परोपकारी AI + विशेषज्ञ",
     chat_online: "🟢 ऑनलाइन · मुफ्त सलाह",
@@ -320,6 +360,26 @@ const translations = {
     cp_this_week: "या आठवड्यात",
     cp_yield_increase: "उद्दिष्ट: मजबूत फुटवे",
     cp_pest_mgmt: "प्रतिबंधात्मक कीटक नियंत्रण",
+
+    // Roadmap
+    rm_title: "रोडमॅप: पारंपारिक → आधुनिक शेती",
+    rm_subtitle: "वैज्ञानिक पद्धतींनी तुमचा नफा दुप्पट करण्याची चरणबद्ध योजना.",
+    rm_trad: "पारंपारिक",
+    rm_modern: "आधुनिक",
+    rm_p1_title: "🌱 मातीचे आरोग्य पाया",
+    rm_p1_time: "आठवडा 1-2",
+    rm_p2_title: "🌾 बीज निवड आणि उपचार",
+    rm_p2_time: "आठवडा 2-3",
+    rm_p3_title: "💧 स्मार्ट पाणी व्यवस्थापन",
+    rm_p3_time: "आठवडा 3-4",
+    rm_p4_title: "🐛 IPM कीड आणि रोग नियंत्रण",
+    rm_p4_time: "आठवडा 4-6",
+    rm_p5_title: "📊 डेटा-आधारित निर्णय",
+    rm_p5_time: "आठवडा 6-8",
+    rm_p6_title: "🚀 कापणी आणि कापणीनंतर",
+    rm_p6_time: "आठवडा 8-10",
+    rm_cta: "कोणत्याही टप्प्याबद्दल प्रश्न आहेत? AgriBot ला तुमच्या शेत प्रोफाइलच्या आधारावर सल्ला विचारा.",
+    rm_cta_btn: "💬 AgriBot ला विचारा",
 
     chat_title: "परोपकारी AI + तज्ञ",
     chat_online: "🟢 ऑनलाइन · मोफत सल्ला",
@@ -575,6 +635,39 @@ function showError(field) {
   if(input) input.classList.add('input-error');
 }
 
+// ============================================
+// OTP Auto-Focus Handlers
+// ============================================
+function handleOtpInput(current, nextId) {
+  // Allow only single digit
+  current.value = current.value.replace(/[^0-9]/g, '').slice(0, 1);
+  clearError('otp');
+
+  // Auto-advance to next box when a digit is entered
+  if (current.value.length === 1 && nextId) {
+    document.getElementById(nextId).focus();
+  }
+}
+
+function handleOtpKeydown(e, current, prevId) {
+  // On Backspace in an empty box, go back to the previous box
+  if (e.key === 'Backspace' && current.value === '' && prevId) {
+    e.preventDefault();
+    const prev = document.getElementById(prevId);
+    prev.value = '';
+    prev.focus();
+  }
+  // On ArrowLeft, move to previous box
+  if (e.key === 'ArrowLeft' && prevId) {
+    document.getElementById(prevId).focus();
+  }
+  // On ArrowRight, move to next box
+  if (e.key === 'ArrowRight') {
+    const nextId = current.getAttribute('oninput')?.match(/'(otp\d)'/)?.[1];
+    if (nextId) document.getElementById(nextId).focus();
+  }
+}
+
 function validateStep(step) {
   let isValid = true;
   if (step === 1) {
@@ -773,15 +866,87 @@ function closeVideoPlayer() {
 }
 
 // ============================================
-// AI Advisory Engine
+// AI Advisory Engine — Multi-Provider with Fallback
 // ============================================
-const _cfg = (() => {
-  const _p = ['AwV3rWlX', 'm_QXAiYc', 'I4mjV4GT', 'cAMRkDy2', 'tKfxkfLM', 'agQK6NR8', 'bA.QA'];
-  return _p.join('').split('').reverse().join('');
-})();
 
-// Conversation history for multi-turn memory
+// --- Provider Configuration ---
+// Primary: Groq (free tier — 14,400 req/day, 30 req/min)
+// Secondary: Gemini (existing key, as backup)
+// Tertiary: Offline fallback (always works, no API needed)
+const AI_PROVIDERS = {
+  groq: {
+    name: 'Groq (Llama)',
+    endpoint: '/api/chat', // Proxied via local server
+    model: 'llama-3.3-70b-versatile',
+    format: 'openai',
+    maxRetries: 2,
+    retryDelayMs: 1000
+  },
+  gemini: {
+    name: 'Gemini',
+    endpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent',
+    key: (() => {
+      const _p = ['AwV3rWlX', 'm_QXAiYc', 'I4mjV4GT', 'cAMRkDy2', 'tKfxkfLM', 'agQK6NR8', 'bA.QA'];
+      return _p.join('').split('').reverse().join('');
+    })(),
+    model: 'gemini-2.0-flash',
+    format: 'gemini',
+    maxRetries: 1,
+    retryDelayMs: 2500
+  }
+};
+
+// Order of providers to try
+const PROVIDER_ORDER = ['groq', 'gemini'];
+
+// Conversation history for multi-turn memory (OpenAI format, converted for Gemini on-the-fly)
 let chatHistory = [];
+let _currentProvider = PROVIDER_ORDER[0];
+
+// --- Offline Fallback Knowledge Base ---
+const OFFLINE_KB = [
+  { keywords: ['pest', 'insect', 'bug', 'कीट', 'कीड़ा', 'कीड़े', 'hopper', 'borer', 'caterpillar'],
+    answer: "For general pest management, I recommend an Integrated Pest Management (IPM) approach:\n\n**Step 1:** Install yellow sticky traps and pheromone traps for monitoring.\n**Step 2:** For sucking pests (aphids, jassids, whitefly), spray **Neem Oil 1500 ppm** @ 5ml/L water.\n**Step 3:** For borers/caterpillars, apply **Bacillus thuringiensis (Bt)** @ 2g/L as a biological control.\n**Step 4:** If infestation is severe (>10% ETL), use **Imidacloprid 17.8% SL** @ 0.3ml/L for sucking pests or **Chlorantraniliprole 18.5% SC** @ 0.3ml/L for borers.\n\nAlways spray in the evening to protect pollinators. 🌿" },
+  { keywords: ['fertilizer', 'fertiliser', 'urea', 'npk', 'dap', 'खाद', 'उर्वरक', 'nutrient', 'nitrogen', 'potash', 'phosphorus'],
+    answer: "Here is a general scientific fertilizer recommendation:\n\n**Basal Dose (at sowing/transplanting):**\n• DAP (18-46-0) @ 100 kg/ha — provides Phosphorus\n• MOP (0-0-60) @ 50 kg/ha — provides Potash\n\n**Top Dressing:**\n• 1st split: Urea (46-0-0) @ 50 kg/ha at 20-25 days\n• 2nd split: Urea @ 50 kg/ha at 40-45 days\n\n**Pro tip:** Always get a soil test done (costs ₹50-100 at your nearest KVK). Apply **Zinc Sulphate 21%** @ 25 kg/ha if zinc deficiency is found. Consider using **neem-coated urea** for 10-15% better nitrogen efficiency. 🌾" },
+  { keywords: ['disease', 'fungus', 'blight', 'rot', 'wilt', 'rust', 'mildew', 'रोग', 'फफूंद', 'फफूंदी', 'झुलसा'],
+    answer: "For common fungal diseases, here is a scientific management plan:\n\n**Preventive (before symptoms):**\n• Seed treatment with **Carbendazim 50% WP** @ 2g/kg seed\n• Spray **Mancozeb 75% WP** @ 2.5g/L at 30 days as a protective fungicide\n\n**Curative (after symptoms appear):**\n• **Tricyclazole 75% WP** @ 0.6g/L for blast disease\n• **Propiconazole 25% EC** @ 1ml/L for rust & sheath blight\n• **Copper Oxychloride 50% WP** @ 3g/L for bacterial leaf blight\n\n**Organic alternative:** Spray **Pseudomonas fluorescens** @ 5g/L or **Trichoderma viride** @ 5g/L as bio-fungicides. 🍃" },
+  { keywords: ['irrigation', 'water', 'pani', 'पानी', 'सिंचाई', 'drip', 'sprinkler'],
+    answer: "Smart irrigation tips to save water and boost yield:\n\n**1. Critical Stages:** Never miss irrigation at:\n• Germination/transplanting\n• Tillering/branching\n• Flowering/grain filling\n\n**2. Drip Irrigation:** Saves 30-50% water. Government subsidy available under PMKSY (up to 55% for small farmers, 45% for others).\n\n**3. Mulching:** Apply paddy straw or plastic mulch to reduce evaporation by 25-30%.\n\n**4. Scheduling:** Irrigate early morning or late evening. For rice, maintain 2-3 cm standing water during critical stages, practice AWD (Alternate Wetting & Drying) otherwise.\n\nContact your district agriculture office for micro-irrigation scheme details. 💧" },
+  { keywords: ['soil', 'mitti', 'मिट्टी', 'health', 'organic', 'compost', 'carbon'],
+    answer: "To improve your soil health scientifically:\n\n**1. Soil Testing:** Get tested at your nearest KVK or Soil Health Card center (free under government scheme). This reveals pH, NPK, micro-nutrient status.\n\n**2. Organic Matter:** Add 5-10 tonnes/ha of well-decomposed FYM (Farm Yard Manure) or vermicompost yearly. This improves water retention and microbial activity.\n\n**3. Green Manuring:** Grow Dhaincha (Sesbania) or Moong before the main crop and incorporate it at 45 days. Adds 50-60 kg N/ha naturally.\n\n**4. Bio-fertilizers:** Use Rhizobium (for legumes), Azotobacter (for cereals), PSB (Phosphate Solubilizing Bacteria) @ 200g per 10kg seed.\n\n**5. Avoid Excess Chemicals:** Over-use of urea makes soil acidic. Balance with organic inputs. 🌱" },
+  { keywords: ['weather', 'rain', 'monsoon', 'forecast', 'temperature', 'मौसम', 'बारिश'],
+    answer: "I recommend checking real-time weather from these free sources:\n\n**1. IMD App:** \"Mausam\" app by India Meteorological Department — free, district-level forecast.\n**2. Meghdoot App:** By ICAR — 5-day block-level weather + crop advisory.\n**3. Kisan Suvidha App:** Government app with weather, market prices, and expert advisory.\n\n**General monsoon tip:** Keep drainage channels clear. If heavy rain is forecast, avoid spraying pesticides (they'll wash off). Schedule fertilizer application 1-2 days before expected light rain for best absorption.\n\nFor real-time alerts, register with your district KVK's Agro-Advisory service (free via SMS). 🌦️" },
+  { keywords: ['scheme', 'subsidy', 'government', 'pm kisan', 'pmfby', 'सरकारी', 'योजना', 'सब्सिडी', 'किसान'],
+    answer: "Key government schemes for Indian farmers:\n\n**1. PM-KISAN:** ₹6,000/year in 3 installments. Register via pmkisan.gov.in or CSC.\n**2. PMFBY (Crop Insurance):** Premium just 2% for Kharif, 1.5% for Rabi. Enroll through your bank.\n**3. KCC (Kisan Credit Card):** Loan up to ₹3 lakh at 4% interest (with timely repayment). Apply at any bank.\n**4. Soil Health Card:** Free soil testing. Apply at soilhealth.dac.gov.in.\n**5. PMKSY (Micro Irrigation):** 55% subsidy on drip/sprinkler for small farmers.\n**6. e-NAM:** Sell produce at best price on national market platform.\n\nVisit your nearest CSC center or district agriculture office for enrollment help. 📋" },
+  { keywords: ['price', 'market', 'mandi', 'msp', 'sell', 'बाजार', 'मंडी', 'भाव', 'दाम'],
+    answer: "Tips for getting the best price for your produce:\n\n**1. Check MSP:** Visit farmer.gov.in for current Minimum Support Prices. Sell at government procurement centers to get MSP.\n**2. e-NAM Portal:** Register on enam.gov.in to access 1,000+ mandis nationwide and compare prices.\n**3. Agmarknet:** Check real-time mandi prices at agmarknet.gov.in.\n**4. Timing:** Avoid selling immediately after harvest when prices are lowest. If possible, store for 2-3 months.\n**5. Grading & Sorting:** Properly graded produce fetches 10-20% higher prices.\n**6. FPO/FPC:** Join a Farmer Producer Organization to get better collective bargaining power.\n\nFor daily price alerts, call Kisan Call Center: 1800-180-1551 (toll free). 📊" },
+  { keywords: ['rice', 'paddy', 'dhaan', 'चावल', 'धान', 'basmati'],
+    answer: "Scientific rice/paddy cultivation advisory:\n\n**Nursery:** Soak seeds in Carbendazim 2g/L for 24 hrs. Raise nursery on raised beds. Transplant 21-25 day old seedlings.\n\n**Spacing:** 20×15 cm for transplanted rice. Use 2-3 seedlings per hill.\n\n**Water Management:** Maintain 2-3 cm water during tillering and flowering. Practice AWD during vegetative phase to save 20-30% water.\n\n**Key Pests:** Brown Plant Hopper — spray Pymetrozine 50% WG @ 0.3g/L. Stem Borer — install 5 pheromone traps/acre + spray Chlorantraniliprole 0.3ml/L.\n\n**Key Diseases:** Blast — spray Tricyclazole 75% WP @ 0.6g/L. Sheath Blight — spray Hexaconazole 5% EC @ 2ml/L.\n\nExpected yield with good management: 50-65 quintals/ha. 🌾" },
+  { keywords: ['wheat', 'गेहूं', 'gehu'],
+    answer: "Scientific wheat cultivation advisory:\n\n**Sowing Time:** October 25 – November 25 (timely sown). Late sowing reduces yield 25-30 kg/ha per day of delay.\n\n**Seed Rate:** 100 kg/ha (timely sown), 125 kg/ha (late sown). Treat seed with Carboxin+Thiram @ 2.5g/kg.\n\n**Varieties:** HD-2967, HD-3086 (timely), WR-544, PBW-373 (late), Lok-1 (irrigated). Choose based on your zone.\n\n**Irrigation:** 5-6 irrigations at: Crown Root (21 days), Tillering (40-45), Late Jointing (60-65), Flowering (80-85), Milking (100-105), Dough (115-120).\n\n**Weed Control:** Spray Sulfosulfuron 75% WG @ 25g/ha at 30-35 DAS.\n\nExpected yield: 45-55 quintals/ha with recommended practices. 🌾" }
+];
+
+function _offlineFallback(userMsg) {
+  const msg = userMsg.toLowerCase();
+  for (const entry of OFFLINE_KB) {
+    if (entry.keywords.some(kw => msg.includes(kw.toLowerCase()))) {
+      return entry.answer;
+    }
+  }
+  // Default fallback
+  return `Namaste! I'm currently in offline mode. I can still help with these topics:\n\n` +
+    `🐛 **Pest & Insect Control** — type "pest"\n` +
+    `🌿 **Disease Management** — type "disease"\n` +
+    `🧪 **Fertilizer Recommendations** — type "fertilizer"\n` +
+    `💧 **Irrigation Tips** — type "irrigation"\n` +
+    `🌱 **Soil Health** — type "soil"\n` +
+    `🌦️ **Weather Advisory** — type "weather"\n` +
+    `📋 **Government Schemes** — type "scheme"\n` +
+    `📊 **Market Prices** — type "price"\n` +
+    `🌾 **Rice/Wheat Advisory** — type "rice" or "wheat"\n\n` +
+    `Or try again in a few minutes when online connectivity is restored.`;
+}
 
 function _buildSysPrompt() {
   return `You are an unbiased, philanthropic agricultural AI advisor for Indian farmers named "AgriBot".
@@ -803,41 +968,128 @@ function _formatAIText(text) {
     .replace(/$/, '</p>');
 }
 
-async function _callAI(userMsg) {
-  // Add user message to history BEFORE call
-  chatHistory.push({ role: 'user', parts: [{ text: userMsg }] });
+// --- Helper: sleep for retry backoff ---
+function _sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${_cfg}`;
-  const body = {
-    systemInstruction: { parts: [{ text: _buildSysPrompt() }] },   // camelCase — was broken as snake_case
-    contents: chatHistory,                                           // full history for multi-turn context
-    generationConfig: {
-      temperature: 0.75,
-      maxOutputTokens: 600,
-      topP: 0.9
-    }
-  };
+// --- Call Groq (OpenAI-compatible format) ---
+async function _callGroq(userMsg, provider) {
+  // Convert chatHistory to OpenAI format
+  const messages = [
+    { role: 'system', content: _buildSysPrompt() },
+    ...chatHistory.map(m => ({
+      role: m.role === 'model' ? 'assistant' : m.role,
+      content: m.parts?.[0]?.text || m.content || ''
+    })),
+    { role: 'user', content: userMsg }
+  ];
 
-  const res = await fetch(endpoint, {
+  const res = await fetch(provider.endpoint, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body)
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      model: provider.model,
+      messages: messages,
+      temperature: 0.75,
+      max_tokens: 600,
+      top_p: 0.9
+    })
   });
 
   if (!res.ok) {
-    chatHistory.pop(); // rollback on error
+    const errData = await res.json().catch(() => ({}));
+    throw new Error(errData?.error?.message || `HTTP ${res.status}`);
+  }
+
+  const data = await res.json();
+  const aiText = data.choices?.[0]?.message?.content;
+  if (!aiText) throw new Error('Empty response from Groq');
+  return aiText;
+}
+
+// --- Call Gemini (Google format) ---
+async function _callGemini(userMsg, provider) {
+  // Convert chatHistory to Gemini format
+  const contents = [
+    ...chatHistory.map(m => ({
+      role: m.role === 'assistant' ? 'model' : m.role,
+      parts: [{ text: m.parts?.[0]?.text || m.content || '' }]
+    })),
+    { role: 'user', parts: [{ text: userMsg }] }
+  ];
+
+  const endpoint = `${provider.endpoint}?key=${provider.key}`;
+  const res = await fetch(endpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      systemInstruction: { parts: [{ text: _buildSysPrompt() }] },
+      contents: contents,
+      generationConfig: { temperature: 0.75, maxOutputTokens: 600, topP: 0.9 }
+    })
+  });
+
+  if (!res.ok) {
     const errData = await res.json().catch(() => ({}));
     throw new Error(errData?.error?.message || `HTTP ${res.status}`);
   }
 
   const data = await res.json();
   const aiText = data.candidates?.[0]?.content?.parts?.[0]?.text;
-  if (!aiText) { chatHistory.pop(); throw new Error('Empty response'); }
-
-  // Add model reply to history so next turn has context
-  chatHistory.push({ role: 'model', parts: [{ text: aiText }] });
+  if (!aiText) throw new Error('Empty response from Gemini');
   return aiText;
 }
+
+// --- Main AI Call with Fallback Chain & Retry ---
+async function _callAI(userMsg) {
+  let lastError = null;
+
+  // Try each provider in order
+  for (const providerKey of PROVIDER_ORDER) {
+    const provider = AI_PROVIDERS[providerKey];
+    if (!provider || provider.key === 'YOUR_GROQ_API_KEY_HERE') {
+      continue; // skip unconfigured providers
+    }
+
+    const callFn = provider.format === 'openai' ? _callGroq : _callGemini;
+
+    // Retry logic with exponential backoff
+    for (let attempt = 0; attempt < provider.maxRetries; attempt++) {
+      try {
+        if (attempt > 0) {
+          await _sleep(provider.retryDelayMs * Math.pow(2, attempt - 1));
+        }
+        const aiText = await callFn(userMsg, provider);
+
+        // Success! Store in history (normalized format)
+        chatHistory.push({ role: 'user', parts: [{ text: userMsg }] });
+        chatHistory.push({ role: 'model', parts: [{ text: aiText }] });
+
+        // Keep history manageable (last 20 messages)
+        if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
+
+        _currentProvider = providerKey;
+        console.log(`[AgriBot] Response from ${provider.name}`);
+        return aiText;
+      } catch (err) {
+        lastError = err;
+        console.warn(`[AgriBot] ${provider.name} attempt ${attempt + 1} failed:`, err.message);
+      }
+    }
+    console.warn(`[AgriBot] All retries exhausted for ${provider.name}, trying next provider...`);
+  }
+
+  // All providers failed — use offline fallback
+  console.log('[AgriBot] All providers failed. Using offline fallback.');
+  const offlineAnswer = _offlineFallback(userMsg);
+  chatHistory.push({ role: 'user', parts: [{ text: userMsg }] });
+  chatHistory.push({ role: 'model', parts: [{ text: offlineAnswer }] });
+  if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
+  _currentProvider = 'offline';
+  return offlineAnswer;
+}
+
 
 function clearChat() {
   chatHistory = [];

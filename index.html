@@ -6,7 +6,7 @@
   <title>AgriProfit - Unbiased Advisory</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" />
-  <link rel="stylesheet" href="styles.css?v=4">
+  <link rel="stylesheet" href="styles.css?v=5">
 </head>
 <body>
 
@@ -89,7 +89,7 @@
 
     <div class="input-group" id="group-name">
       <label data-i18n="reg_name">Full Name *</label>
-      <input type="text" id="regName" class="input-field" placeholder="e.g. Rajesh Kumar" oninput="clearError('name')">
+      <input type="text" id="regName" class="input-field" placeholder="e.g. Harender Bhati" oninput="clearError('name')">
       <div class="error-message" id="err-name">Please enter your full name.</div>
     </div>
     
@@ -104,10 +104,10 @@
       <div class="input-group mt-4" id="group-otp">
         <label data-i18n="reg_enter_otp">Enter 4-digit OTP sent to your phone</label>
         <div style="display:flex; gap:8px;">
-          <input type="number" id="otp1" class="input-field text-center" placeholder="-" oninput="clearError('otp')">
-          <input type="number" id="otp2" class="input-field text-center" placeholder="-" oninput="clearError('otp')">
-          <input type="number" id="otp3" class="input-field text-center" placeholder="-" oninput="clearError('otp')">
-          <input type="number" id="otp4" class="input-field text-center" placeholder="-" oninput="clearError('otp')">
+          <input type="text" inputmode="numeric" id="otp1" class="input-field text-center" placeholder="-" maxlength="1" pattern="[0-9]" oninput="handleOtpInput(this, 'otp2')" onkeydown="handleOtpKeydown(event, this, null)">
+          <input type="text" inputmode="numeric" id="otp2" class="input-field text-center" placeholder="-" maxlength="1" pattern="[0-9]" oninput="handleOtpInput(this, 'otp3')" onkeydown="handleOtpKeydown(event, this, 'otp1')">
+          <input type="text" inputmode="numeric" id="otp3" class="input-field text-center" placeholder="-" maxlength="1" pattern="[0-9]" oninput="handleOtpInput(this, 'otp4')" onkeydown="handleOtpKeydown(event, this, 'otp2')">
+          <input type="text" inputmode="numeric" id="otp4" class="input-field text-center" placeholder="-" maxlength="1" pattern="[0-9]" oninput="handleOtpInput(this, null)" onkeydown="handleOtpKeydown(event, this, 'otp3')">
         </div>
         <div class="error-message" id="err-otp">OTP must be 4 digits.</div>
       </div>
@@ -184,7 +184,7 @@
   <div class="dashboard-header">
     <div class="user-info">
       <div>
-        <h1 id="dashGreeting" data-i18n="dash_greeting">Welcome back, Rajesh ji 👋</h1>
+        <h1 id="dashGreeting" data-i18n="dash_greeting">Welcome back, Harender ji 👋</h1>
         <p><span class="material-symbols-rounded" style="font-size:16px;">location_on</span> <span id="dashLocation" data-i18n="dash_location">Karnal, Haryana</span></p>
       </div>
     </div>
@@ -342,6 +342,216 @@
       </div>
     </div>
   </div>
+
+  <!-- ============================================
+       Modern Farming Transition Roadmap
+       ============================================ -->
+  <div class="roadmap-section">
+    <div class="roadmap-header">
+      <span class="material-symbols-rounded" style="font-size:28px; color:var(--green-600);">rocket_launch</span>
+      <div>
+        <h3 data-i18n="rm_title">Roadmap: Traditional → Modern Farming</h3>
+        <p class="text-sm text-muted" data-i18n="rm_subtitle">A step-by-step transition plan to double your profit using scientific methods.</p>
+      </div>
+    </div>
+
+    <!-- Comparison Banner -->
+    <div class="compare-banner">
+      <div class="compare-side traditional">
+        <span class="material-symbols-rounded">agriculture</span>
+        <div>
+          <strong data-i18n="rm_trad">Traditional</strong>
+          <p>~₹25,000/acre profit</p>
+        </div>
+      </div>
+      <div class="compare-arrow">
+        <span class="material-symbols-rounded">trending_flat</span>
+      </div>
+      <div class="compare-side modern">
+        <span class="material-symbols-rounded">precision_manufacturing</span>
+        <div>
+          <strong data-i18n="rm_modern">Modern</strong>
+          <p>~₹48,000/acre profit</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 1 -->
+    <div class="roadmap-card" onclick="this.classList.toggle('expanded')">
+      <div class="roadmap-card-header">
+        <div class="roadmap-phase-badge">Phase 1</div>
+        <div class="roadmap-card-title">
+          <h4 data-i18n="rm_p1_title">🌱 Soil Health Foundation</h4>
+          <span class="roadmap-duration" data-i18n="rm_p1_time">Week 1-2</span>
+        </div>
+        <span class="material-symbols-rounded roadmap-expand-icon">expand_more</span>
+      </div>
+      <div class="roadmap-card-body">
+        <div class="roadmap-change">
+          <div class="change-from">
+            <span class="change-label">❌ Stop</span>
+            <p data-i18n="rm_p1_from">Guessing soil condition. Applying same fertilizer dose every season without testing.</p>
+          </div>
+          <div class="change-to">
+            <span class="change-label">✅ Start</span>
+            <p data-i18n="rm_p1_to">Get a free Soil Health Card from your KVK. Apply fertilizers based on test results (saves ₹2,000–3,000/acre). Add 2-3 tonnes FYM per acre.</p>
+          </div>
+        </div>
+        <div class="roadmap-impact">
+          <span class="material-symbols-rounded">savings</span>
+          <span data-i18n="rm_p1_impact">Cost saved: ₹2,500/acre · Yield boost: +8%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 2 -->
+    <div class="roadmap-card" onclick="this.classList.toggle('expanded')">
+      <div class="roadmap-card-header">
+        <div class="roadmap-phase-badge">Phase 2</div>
+        <div class="roadmap-card-title">
+          <h4 data-i18n="rm_p2_title">🌾 Seed Selection & Treatment</h4>
+          <span class="roadmap-duration" data-i18n="rm_p2_time">Week 2-3</span>
+        </div>
+        <span class="material-symbols-rounded roadmap-expand-icon">expand_more</span>
+      </div>
+      <div class="roadmap-card-body">
+        <div class="roadmap-change">
+          <div class="change-from">
+            <span class="change-label">❌ Stop</span>
+            <p data-i18n="rm_p2_from">Saving seeds from last harvest. Sowing without seed treatment. Broadcasting seeds by hand.</p>
+          </div>
+          <div class="change-to">
+            <span class="change-label">✅ Start</span>
+            <p data-i18n="rm_p2_to">Buy certified seeds (HD-3086 wheat, Pusa Basmati 1121 rice). Treat with Carbendazim 2g/kg + Imidacloprid 5ml/kg. Use seed drill for uniform spacing.</p>
+          </div>
+        </div>
+        <div class="roadmap-impact">
+          <span class="material-symbols-rounded">savings</span>
+          <span data-i18n="rm_p2_impact">Investment: ₹1,500/acre · Yield boost: +15-20%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 3 -->
+    <div class="roadmap-card" onclick="this.classList.toggle('expanded')">
+      <div class="roadmap-card-header">
+        <div class="roadmap-phase-badge">Phase 3</div>
+        <div class="roadmap-card-title">
+          <h4 data-i18n="rm_p3_title">💧 Smart Water Management</h4>
+          <span class="roadmap-duration" data-i18n="rm_p3_time">Week 3-4</span>
+        </div>
+        <span class="material-symbols-rounded roadmap-expand-icon">expand_more</span>
+      </div>
+      <div class="roadmap-card-body">
+        <div class="roadmap-change">
+          <div class="change-from">
+            <span class="change-label">❌ Stop</span>
+            <p data-i18n="rm_p3_from">Flood irrigation wasting 40-60% water. Irrigating on a fixed calendar regardless of crop stage or weather.</p>
+          </div>
+          <div class="change-to">
+            <span class="change-label">✅ Start</span>
+            <p data-i18n="rm_p3_to">Install drip/sprinkler irrigation (55% govt subsidy under PMKSY). Use AWD (Alternate Wetting & Drying) for rice. Irrigate at critical stages only.</p>
+          </div>
+        </div>
+        <div class="roadmap-impact">
+          <span class="material-symbols-rounded">savings</span>
+          <span data-i18n="rm_p3_impact">Water saved: 30-50% · Electricity saved: ₹3,000/season</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 4 -->
+    <div class="roadmap-card" onclick="this.classList.toggle('expanded')">
+      <div class="roadmap-card-header">
+        <div class="roadmap-phase-badge">Phase 4</div>
+        <div class="roadmap-card-title">
+          <h4 data-i18n="rm_p4_title">🐛 IPM Pest & Disease Control</h4>
+          <span class="roadmap-duration" data-i18n="rm_p4_time">Week 4-6</span>
+        </div>
+        <span class="material-symbols-rounded roadmap-expand-icon">expand_more</span>
+      </div>
+      <div class="roadmap-card-body">
+        <div class="roadmap-change">
+          <div class="change-from">
+            <span class="change-label">❌ Stop</span>
+            <p data-i18n="rm_p4_from">Spraying pesticides on a fixed calendar. Using branded cocktails recommended by dealers. Ignoring safety gear.</p>
+          </div>
+          <div class="change-to">
+            <span class="change-label">✅ Start</span>
+            <p data-i18n="rm_p4_to">Adopt Integrated Pest Management (IPM): pheromone traps, yellow sticky traps, Neem Oil 1500ppm as first line. Spray generics like Imidacloprid 17.8% SL only when ETL threshold is crossed.</p>
+          </div>
+        </div>
+        <div class="roadmap-impact">
+          <span class="material-symbols-rounded">savings</span>
+          <span data-i18n="rm_p4_impact">Pesticide cost reduced: 40% · Healthier produce, better price</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 5 -->
+    <div class="roadmap-card" onclick="this.classList.toggle('expanded')">
+      <div class="roadmap-card-header">
+        <div class="roadmap-phase-badge">Phase 5</div>
+        <div class="roadmap-card-title">
+          <h4 data-i18n="rm_p5_title">📊 Data-Driven Decisions</h4>
+          <span class="roadmap-duration" data-i18n="rm_p5_time">Week 6-8</span>
+        </div>
+        <span class="material-symbols-rounded roadmap-expand-icon">expand_more</span>
+      </div>
+      <div class="roadmap-card-body">
+        <div class="roadmap-change">
+          <div class="change-from">
+            <span class="change-label">❌ Stop</span>
+            <p data-i18n="rm_p5_from">Relying solely on dealer advice (often biased). No record-keeping of input costs. Selling at whatever price the local trader offers.</p>
+          </div>
+          <div class="change-to">
+            <span class="change-label">✅ Start</span>
+            <p data-i18n="rm_p5_to">Use AgriProfit's calculator to track costs. Check e-NAM (enam.gov.in) for best mandi prices. Maintain a digital farm diary for each season. Compare input costs vs. output value.</p>
+          </div>
+        </div>
+        <div class="roadmap-impact">
+          <span class="material-symbols-rounded">savings</span>
+          <span data-i18n="rm_p5_impact">Profit visibility: +100% · Better selling decisions: +₹2,000-5,000/acre</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 6 -->
+    <div class="roadmap-card" onclick="this.classList.toggle('expanded')">
+      <div class="roadmap-card-header">
+        <div class="roadmap-phase-badge">Phase 6</div>
+        <div class="roadmap-card-title">
+          <h4 data-i18n="rm_p6_title">🚀 Harvest & Post-Harvest</h4>
+          <span class="roadmap-duration" data-i18n="rm_p6_time">Week 8-10</span>
+        </div>
+        <span class="material-symbols-rounded roadmap-expand-icon">expand_more</span>
+      </div>
+      <div class="roadmap-card-body">
+        <div class="roadmap-change">
+          <div class="change-from">
+            <span class="change-label">❌ Stop</span>
+            <p data-i18n="rm_p6_from">Burning stubble (illegal & destroys soil carbon). Selling immediately after harvest at low prices. No grading or sorting.</p>
+          </div>
+          <div class="change-to">
+            <span class="change-label">✅ Start</span>
+            <p data-i18n="rm_p6_to">Use Happy Seeder for stubble management. Store produce for 2-3 months if possible (warehouse receipt financing available). Grade & sort for 10-20% better price. Join an FPO for collective bargaining.</p>
+          </div>
+        </div>
+        <div class="roadmap-impact">
+          <span class="material-symbols-rounded">savings</span>
+          <span data-i18n="rm_p6_impact">Post-harvest loss reduced: 15% · Price premium: +₹3,000-8,000/acre</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom CTA -->
+    <div class="roadmap-cta">
+      <span class="material-symbols-rounded" style="font-size:32px; color:var(--green-600);">smart_toy</span>
+      <p data-i18n="rm_cta">Have questions about any phase? Ask AgriBot for personalized advice based on your farm profile.</p>
+      <button class="btn btn-cta btn-full" onclick="navigateTo('screen-expert')" data-i18n="rm_cta_btn">💬 Ask AgriBot Now</button>
+    </div>
+  </div>
+
 </section>
 
 <!-- ============================================
@@ -767,7 +977,7 @@
 <section class="screen" id="screen-profile">
   <div class="profile-header">
     <div class="profile-avatar">👨‍🌾</div>
-    <h2 id="profileName">Rajesh Kumar</h2>
+    <h2 id="profileName">Harender Bhati</h2>
     <p>AgriStack ID: HR-KNL-1244-5902</p>
   </div>
 
@@ -910,6 +1120,6 @@
     });
   }
 </script>
-<script src="app.js?v=5"></script>
+<script src="app.js?v=6"></script>
 </body>
 </html>
